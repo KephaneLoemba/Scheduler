@@ -5,10 +5,14 @@ $(document).ready(function(){
     
     
     //Let's create some arrays, containing ou different timeslots/key names.
-    let timeSlots = ['9AM', '10AM']
+    let timeSlots = ['9AM', '10AM','11AM', '12PM', '1PM', '2PM', '3PM', '4PM', '5PM']
 
-    //'11AM', '12PM', '1PM', '2PM', '3PM', '4PM', '5PM',
 
+
+    //Add current date and time, "using moment.js" .
+    let theDate = moment().format('MMMM Do YYYY');
+
+    $('#currentDay').text(theDate)
     
     
     
@@ -44,7 +48,9 @@ $(document).ready(function(){
 
         let saveBtn = $('<button>')
         saveBtn.attr('save-index', hour)
-        saveBtn.html("<i class='far fa-save'></i>")
+        let saveIcon = $('<i>')
+        saveIcon.addClass('far fa-save')
+        saveBtn.append(saveIcon)
         saveCol.append(saveBtn)
 
         $('div#bigContainer').append(newRow);
@@ -52,12 +58,6 @@ $(document).ready(function(){
         newRow.append(inputCol);
 
         hour++;
-
-        // let timeSave = $('<button>')
-
-        // timeSave.addClass('saveBtn').text(timeSlots[i])
-        
-        // $('#bigContainer').append(timeSave)
 
 
     }
