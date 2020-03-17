@@ -9,11 +9,21 @@ $(document).ready(function(){
 
 
 
-    //Add current date and time, "using moment.js" .
-    let theDate = moment().format('MMMM Do YYYY');
+    //Add current date and time, "using moment.js". The time will update itself on the page once per second.
+    function updateTime() {
 
-    $('#currentDay').text(theDate)
-    
+        let theDate = moment().format('MMMM Do YYYY');
+        $('#currentDay').html(theDate);
+
+        let theTime = moment().format('LTS');
+        $('#currentTime').html(theTime);
+
+    }
+
+    updateTime();
+    setInterval( function() {
+        updateTime()
+    },1000);
     
     
     for (i = 0; i < timeSlots.length; i++) {
