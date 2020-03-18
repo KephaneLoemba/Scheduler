@@ -26,10 +26,6 @@ $(document).ready(function(){
     },1000);
 
     
-    let saveIcon = $('<button>')
-        saveIcon.addClass('saveBtn far fa-save');
-        $('#test').append(saveIcon)
-    
     //Dynamically create all of the calendar's rows.
 
     for (i = 0; i < timeSlots.length; i++) {
