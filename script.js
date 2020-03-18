@@ -24,48 +24,50 @@ $(document).ready(function(){
     setInterval( function() {
         updateTime()
     },1000);
+
     
+    let saveIcon = $('<button>')
+        saveIcon.addClass('saveBtn far fa-save');
+        $('#test').append(saveIcon)
     
+    //Dynamically create all of the calendar's rows.
+
     for (i = 0; i < timeSlots.length; i++) {
 
         let hour = 9;
         
         let newRow = $('<div>');
         newRow.addClass('row plannerRow');
-        newRow.text(timeSlots[i]);
         newRow.attr('hour-index', hour);
         
 
         let timeCol = $('<div>');
-        timeCol.addClass('col-md-2');
+        timeCol.addClass('col-md-1');
 
         let timeColContent = $('<p>');
-
-        timeColContent.attr('placeholder', 'Nothing planned yet, for this hour.');
         timeColContent.html(timeSlots[i]);
 
         timeCol.append(timeColContent)
 
         let inputCol = $('<div>');
-        inputCol.addClass('col-md-8');
+        inputCol.addClass('col-md');
 
-        let inputColContent = $('<input>');
-        inputColContent.attr('type', 'text');
+        let inputColContent = $('<textarea>');
+        inputColContent.attr('placeholder', 'Nothing planned yet, for this hour.');
         inputCol.append(inputColContent);
 
         let saveCol = $('<div>')
-        saveCol.addClass('col-md-2')
+        saveCol.addClass('col-md-1')
 
-        let saveBtn = $('<button>')
-        saveBtn.attr('save-index', hour)
-        let saveIcon = $('<i>')
-        saveIcon.addClass('far fa-save')
-        saveBtn.append(saveIcon)
-        saveCol.append(saveBtn)
-
+        let saveBtn = $('<button>');
+        saveBtn.addClass('saveBtn far fa-save');
+        saveBtn.attr('save-index', hour);
+        saveCol.append(saveBtn);
+       
         $('div#bigContainer').append(newRow);
         newRow.append(timeCol);
         newRow.append(inputCol);
+        newRow.append(saveCol);
 
         hour++;
 
