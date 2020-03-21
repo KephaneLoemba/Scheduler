@@ -9,7 +9,8 @@ $(document).ready(function(){
 
 
 
-    //Add current date and time, "using moment.js". The time will update itself on the page once per second.
+    //Add current date and time, "using moment.js". 
+    //The time will update itself on the page once per second.
     function updateTime() {
 
         let theDate = moment().format('MMMM Do YYYY');
@@ -24,6 +25,11 @@ $(document).ready(function(){
     setInterval( function() {
         updateTime()
     },1000);
+
+    //Introduce the currentHour variable, using moment.js. 
+    //This hour will be marked in the 24h format.
+    let currentHour = moment().format('H');
+    currentHour = parseInt(currentHour);
 
     
     //Dynamically create all of the calendar's rows.
@@ -49,6 +55,7 @@ $(document).ready(function(){
 
         let inputColContent = $('<textarea>');
         inputColContent.attr('placeholder', 'Nothing planned yet, for this hour.');
+        inputColContent.attr('type-index', timeSlots[i]);
         inputCol.append(inputColContent);
 
         let saveCol = $('<div>')
@@ -56,7 +63,7 @@ $(document).ready(function(){
 
         let saveBtn = $('<button>');
         saveBtn.addClass('saveBtn far fa-save');
-        saveBtn.attr('save-index', hour);
+        saveBtn.attr('id', timeSlots[i]);
         saveCol.append(saveBtn);
        
         $('div#bigContainer').append(newRow);
@@ -64,24 +71,44 @@ $(document).ready(function(){
         newRow.append(inputCol);
         newRow.append(saveCol);
         
-      
+        updateRowColor();
+
+        
+
+
         
         hour++;
         
 
     }
 
-    //Introduce the currentHour variable, using moment.js. this hour will be marked in the 24h format.
+    //Add code that checks if items are in local storage.
+    //If so, insert tose values to the corresponding text areas.
+    $.each(localStorage, function(key, value) {  
+        $("#" + key).parent().parent().find("textarea").val(value);
+    })
 
-    let currentHour = moment().format('H');
-    currentHour = parseInt(currentHour);
+    // when saved button is clicked, text from that row is saved to Locol storage.
+    $(".saveBtn").click(function() {  
+        let eventContent = $(this).parent().parent().find("textarea").val();  
+        let eventTime = $(this).attr("id");  
+        localStorage.setItem(eventTime, eventContent);
+        console.log(localStorage);
+    })
+
+    // Add a CLEAR button that removes all items from text areas, and localStorage.
+    $("#clear-button").click(function() {  
+        localStorage.clear();  
+        $("textarea").each(function() {    
+            $(this).val("");  });
+        })
 
     
-    //add code that dynamically chages the text area's CSS pase on what time it is. Run this every second.
+    //add code that dynamically chages the text area's CSS pase on what time it is. Run this every 60 seconds.
 
     setInterval( function() {
         updateRowColor()
-    },1000);
+    },60000);
 
     function updateRowColor() {
         thisRow = $('.row-colors').toArray();
